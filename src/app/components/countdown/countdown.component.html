@@ -1,0 +1,41 @@
+<div *ngIf="!this.httpError">
+
+  <section *ngIf="!this.claimed">
+    <div>
+      {{this.countdownData.titleText}}
+    </div>
+    <div>
+      {{timer| date:'mm:ss'}}
+    </div>
+    <div>
+      <button type="button" class="btn btn-primary"
+        *ngIf="timer>0" (click)="this.claimed=true">
+          {{this.countdownData.buttonText}}
+      </button>
+    </div>
+  </section>
+
+  <section *ngIf="this.claimed && timer>=0">
+    <div>
+      {{this.countdownData.titleSuccessText}}
+    </div>
+    <button type="button" class="btn btn-success">
+      {{this.countdownData.successfulClaimText}}
+    </button>
+  </section>
+  <section *ngIf="!this.claimed && timer<=0"
+    (click)="this.getJSON()">
+    <button type="button" class="btn btn-warning">
+      {{this.countdownData.tryAgainText}}
+    </button>
+  </section>
+</div>
+
+<div *ngIf="this.httpError">
+  <section *ngIf="!this.claimed && timer<=0"
+    (click)="this.getJSON()">
+    <button type="button" class="btn btn-danger">
+      Error - Try Again - See Logs
+    </button>
+  </section>
+</div>
